@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.check_in.dao.AgentAccountDAO;
+import com.check_in.dao.TokenKeyDAOImpl;
 import com.check_in.dao.UserSiteInformationDAO;
+import com.check_in.dto.TokenKeyDTO;
 import com.check_in.dto.UserSiteInformationDTO;
 
 import proj.checkIN.services.EmailHandlerImpl;
@@ -74,9 +76,21 @@ public class PageController {
 	public String testJWT(HttpServletRequest request) throws IOException, ServletException, ClassNotFoundException, SQLException {		
 		System.out.println("testJWT()");
 		JWTServiceImpl jwtService = new JWTServiceImpl();
-		String result = jwtService.create("inghyunho@naver.com");
+		String result = jwtService.create("abcd@naver.com");
 		System.out.println(result);
-		System.out.println(jwtService.validation(result));
+		System.out.println(jwtService.validation(result, "abcd@naver.com"));
+		
+		return "sendOK";
+	}
+	@RequestMapping(value = "/jwtd", method = RequestMethod.GET)
+	public String tesJWT(HttpServletRequest request) throws IOException, ServletException, ClassNotFoundException, SQLException {		
+		System.out.println("Delete JWT()");
+		String agentID = "abcd@naver.com";
+		TokenKeyDAOImpl token = TokenKeyDAOImpl.getInstance();
+		TokenKeyDTO token_dto = new TokenKeyDTO();
+		
+		token_dto.setAgentID(agentID);
+		token.delete(token_dto);
 		
 		return "sendOK";
 	}

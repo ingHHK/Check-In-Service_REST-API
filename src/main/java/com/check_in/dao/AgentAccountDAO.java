@@ -166,4 +166,13 @@ public class AgentAccountDAO implements DAO {
         pstmt.close();
         con.close();
     }
+    
+    public boolean isKey(AgentAccountDTO dto) throws SQLException, ClassNotFoundException {
+        int cnt = existAccount(dto);  // 기존 데이터와 키값 중복 여부 확인
+
+        if(cnt != 0)
+            return true;
+        else
+            return false;
+    }
 }

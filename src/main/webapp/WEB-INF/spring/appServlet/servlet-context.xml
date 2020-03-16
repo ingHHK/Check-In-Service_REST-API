@@ -26,6 +26,7 @@
 	<beans:bean id="agentAccountDAO" class="com.check_in.dao.AgentAccountDAO" />
 	<beans:bean id="emailHandlerImpl" class="proj.checkIN.services.EmailHandlerImpl" />
 	<beans:bean id="Encoder" class="proj.checkIN.services.Encoder"/>
+	<beans:bean id="tokenKeyDAOImpl" class="com.check_in.dao.TokenKeyDAOImpl"/>
 	
 	
 </beans:beans>

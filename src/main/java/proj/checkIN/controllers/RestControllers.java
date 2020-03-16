@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.check_in.dao.AgentAccountDAO;
+import com.check_in.dao.TokenKeyDAOImpl;
 import com.check_in.dao.UserSiteInformationDAO;
 import com.check_in.dto.AgentAccountDTO;
+import com.check_in.dto.TokenKeyDTO;
 import com.check_in.dto.UserSiteInformationDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -45,7 +47,7 @@ public class RestControllers {
 		
 		final String agentID = request_data.getAgentID();
 		
-		if(!email.isDuplicate(agentID)) {	//이메일 중복 여부 확인
+		if(email.isDuplicate(agentID)) {	//이메일 중복 여부 확인
 			response_data.setResult(false);
 			String returnData = mapper.writeValueAsString(response_data);
 			return returnData;
@@ -96,7 +98,8 @@ public class RestControllers {
 		if(agentPW.equals(db_info.getAgentPW())) {	//비밀번호 일치 확인
 			response_data.setResult(true);
 			String jwt = jws.create(agentID);		//로그인 토큰 생성
-			response.setHeader("jwt", jwt);
+			response.setHeader("Authorization",jwt);
+
 			String returnData = mapper.writeValueAsString(response_data);
 			return returnData;
 		} else {
@@ -110,13 +113,22 @@ public class RestControllers {
 	public String signOut(HttpServletRequest request) throws IOException, ServletException, ClassNotFoundException, SQLException {		
 		ObjectMapper mapper = new ObjectMapper();
 		BufferedReader reader = request.getReader();
-		AgentAccountDTO request_data = mapper.readValue(reader, AgentAccountDTO.class);
-		AgentAccountDTO response_data = new AgentAccountDTO();
+		LoginJSONData request_data = mapper.readValue(reader, LoginJSONData.class);
+		LoginJSONData response_data = new LoginJSONData();
 		
-		final String jwsString = request.getHeader("jwt");
+		TokenKeyDAOImpl token = TokenKeyDAOImpl.getInstance();
+		TokenKeyDTO token_dto = new TokenKeyDTO();		
 		
-		if(jws.validation(jwsString)) {
-			//--> DB에 토큰 정보 삭제 요청 추가
+		final String jwsString = request.getHeader("Authorization");
+		final String agentID = request_data.getId();
+		
+		response_data.setJwtString(jwsString);
+
+		token_dto.setAgentID(agentID);
+		
+		response_data.setJwtString(jwsString);
+		if(jws.validation(jwsString, agentID)) {
+			token.delete(token_dto);
 			//--> jwt expiration
 			response_data.setResult(true);
 		}
@@ -135,9 +147,11 @@ public class RestControllers {
 		UserSiteInformationDTO request_data = mapper.readValue(reader, UserSiteInformationDTO.class);
 		UserSiteInformationDTO response_data = new UserSiteInformationDTO();
 		
-		final String jwsString = request.getHeader("jwt");
 		
-		if(jws.validation(jwsString)) {
+		final String jwsString = request.getHeader("jwt");
+		final String agentID = request_data.getAgentID();
+		
+		if(jws.validation(jwsString, agentID)) {
 			siteInfo.insert(request_data);
 			response_data.setResult(true);
 		}
@@ -157,8 +171,9 @@ public class RestControllers {
 		UserSiteInformationDTO response_data = new UserSiteInformationDTO();
 		
 		final String jwsString = request.getHeader("jwt");
-		
-		if(jws.validation(jwsString)) {
+		final String agentID = request_data.getAgentID();
+
+		if(jws.validation(jwsString, agentID)) {
 			siteInfo.update(request_data);
 			response_data.setResult(true);
 		}
@@ -178,8 +193,9 @@ public class RestControllers {
 		UserSiteInformationDTO response_data = new UserSiteInformationDTO();
 		
 		final String jwsString = request.getHeader("jwt");
+		final String agentID = request_data.getAgentID();
 		
-		if(jws.validation(jwsString)) {
+		if(jws.validation(jwsString, agentID)) {
 			siteInfo.delete(request_data);
 			response_data.setResult(true);
 		}

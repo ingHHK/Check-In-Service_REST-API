@@ -1,6 +1,7 @@
 package proj.checkIN.services;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Random;
 
 import javax.inject.Inject;
@@ -12,6 +13,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import com.check_in.dao.AgentAccountDAO;
+import com.check_in.dto.AgentAccountDTO;
 
 @Service
 public class EmailHandlerImpl implements EmailHandler{
@@ -24,7 +26,17 @@ public class EmailHandlerImpl implements EmailHandler{
 	@Override
 	public boolean isDuplicate(String agentID) {
 		boolean result = false;
-		
+		AgentAccountDTO accountdto = new AgentAccountDTO();
+		accountdto.setAgentID(agentID);
+		try {
+			result = accountdao.isKey(accountdto);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return result;
 	}
 	

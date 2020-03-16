@@ -188,4 +188,13 @@ public class UserSiteInformationDAO {
         pstmt.close();
         con.close();
     }
+    
+    public boolean isKey(UserSiteInformationDTO dto) throws SQLException, ClassNotFoundException {
+        int cnt = existKey(dto);  // 기존 데이터와 키값 중복 여부 확인
+
+        if(cnt != 0)
+            return true;
+        else
+            return false;
+    }
 }
