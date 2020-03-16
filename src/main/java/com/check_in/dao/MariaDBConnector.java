@@ -19,7 +19,7 @@ public class MariaDBConnector {
     public Connection getConnection() throws ClassNotFoundException, SQLException {
         Class.forName("org.mariadb.jdbc.Driver");
         String url = "jdbc:mariadb://checkin.c9rx0ccvnmw0.us-east-2.rds.amazonaws.com:3306/checkIN";
-        Connection con = DriverManager.getConnection(url, "admin", "klose0409");
+        Connection con = DriverManager.getConnection(url, "admin", "****");
 
         return con;
     }
