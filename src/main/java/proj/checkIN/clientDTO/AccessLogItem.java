@@ -1,4 +1,4 @@
-package proj.checkIN.androidDTO;
+package proj.checkIN.clientDTO;
 
 class AccessLogItem {
     private String ip;

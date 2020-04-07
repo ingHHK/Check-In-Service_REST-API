@@ -1,22 +1,22 @@
-package proj.checkIN.androidDTO;
+package proj.checkIN.clientDTO;
 
 import java.util.ArrayList;
 
 public class AccessLogJSONData {
-    private String id;
+    private String agentID;
     private ArrayList<AccessLogItem> AccessLogList;
 
     public AccessLogJSONData(String id, ArrayList<AccessLogItem> accessLogList) {
-        this.id = id;
+        this.agentID = id;
         AccessLogList = accessLogList;
     }
 
     public String getId() {
-        return id;
+        return agentID;
     }
 
     public void setId(String id) {
-        this.id = id;
+        this.agentID = id;
     }
 
     public ArrayList<AccessLogItem> getAccessLogList() {

@@ -16,12 +16,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.check_in.dao.AgentAccountDAO;
-import com.check_in.dao.TokenKeyDAOImpl;
-import com.check_in.dao.UserSiteInformationDAO;
 import com.check_in.dto.TokenKeyDTO;
 import com.check_in.dto.UserSiteInformationDTO;
 
+import proj.checkIN.DB.AgentAccountDAOImpl;
+import proj.checkIN.DB.TokenKeyDAOImpl;
+import proj.checkIN.DB.UserSiteInformationDAOImpl;
 import proj.checkIN.services.EmailHandlerImpl;
 import proj.checkIN.services.Encoder;
 import proj.checkIN.services.JWTServiceImpl;
@@ -31,9 +31,9 @@ public class PageController {
 	@Autowired
 	EmailHandlerImpl email;
 	@Autowired
-	AgentAccountDAO agentDAO;
+	AgentAccountDAOImpl agentDAO;
 	@Autowired
-	UserSiteInformationDAO infoDAO;
+	UserSiteInformationDAOImpl infoDAO;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {		

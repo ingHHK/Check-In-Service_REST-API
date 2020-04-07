@@ -12,8 +12,9 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
-import com.check_in.dao.AgentAccountDAO;
 import com.check_in.dto.AgentAccountDTO;
+
+import proj.checkIN.DB.AgentAccountDAOImpl;
 
 @Service
 public class EmailHandlerImpl implements EmailHandler{
@@ -21,7 +22,7 @@ public class EmailHandlerImpl implements EmailHandler{
 		
 	}
 	@Autowired
-	AgentAccountDAO accountdao;
+	AgentAccountDAOImpl accountdao;
 	
 	@Override
 	public boolean isDuplicate(String agentID) {

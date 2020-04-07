@@ -1,4 +1,4 @@
-package proj.checkIN.androidDTO;
+package proj.checkIN.clientDTO;
 
 public class LoginNumberJSONData {
     private String LoginNumber;
