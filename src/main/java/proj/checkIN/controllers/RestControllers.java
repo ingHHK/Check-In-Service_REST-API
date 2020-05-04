@@ -14,15 +14,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.check_in.dao.AgentAccountDAO;
-import com.check_in.dao.TokenKeyDAOImpl;
-import com.check_in.dao.UserSiteInformationDAO;
 import com.check_in.dto.AgentAccountDTO;
 import com.check_in.dto.TokenKeyDTO;
 import com.check_in.dto.UserSiteInformationDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import proj.checkIN.androidDTO.LoginJSONData;
+import proj.checkIN.DB.AgentAccountDAOImpl;
+import proj.checkIN.DB.TokenKeyDAOImpl;
+import proj.checkIN.DB.UserSiteInformationDAOImpl;
+import proj.checkIN.clientDTO.LoginJSONData;
 import proj.checkIN.services.EmailHandlerImpl;
 import proj.checkIN.services.JWTServiceImpl;
 
@@ -32,9 +32,9 @@ public class RestControllers {
 	@Autowired
 	EmailHandlerImpl email;
 	@Autowired
-	AgentAccountDAO account;
+	AgentAccountDAOImpl account;
 	@Autowired
-	UserSiteInformationDAO siteInfo;
+	UserSiteInformationDAOImpl siteInfo;
 	@Autowired
 	JWTServiceImpl jws;
 	
@@ -48,13 +48,13 @@ public class RestControllers {
 		final String agentID = request_data.getAgentID();
 		
 		if(email.isDuplicate(agentID)) {	//이메일 중복 여부 확인
-			response_data.setResult(false);
+			//response_data.setResult(false);
 			String returnData = mapper.writeValueAsString(response_data);
 			return returnData;
 		} else {
 			String verify_code = email.mailSending(agentID);	//중복이 아니라면, 인증 코드 이메일 보내기
-			response_data.setResult(true);
-			response_data.setVerify_code(verify_code);	//인증 코드 response 객체에 담아서 보내기
+			//response_data.setResult(true);
+			//response_data.setVerify_code(verify_code);	//인증 코드 response 객체에 담아서 보내기
 			String returnData = mapper.writeValueAsString(response_data);
 			return returnData;
 		}
@@ -70,9 +70,9 @@ public class RestControllers {
 		int result = account.insert(request_data);	//request 데이터를 그대로 insert 함수로 전달
 		
 		if(result == 1) {	//함수 결과가 1이면 성공, 0이면 실패
-			response_data.setResult(true);
+			//response_data.setResult(true);
 		} else {
-			response_data.setResult(false);
+			//response_data.setResult(false);
 		}
 		
 		String returnData = mapper.writeValueAsString(response_data);
@@ -80,7 +80,7 @@ public class RestControllers {
 		return returnData;
 	}
 	
-	@RequestMapping(value = "/signIn", method = RequestMethod.POST, consumes="application/json", headers = "content-type=application/x-www-form-urlencoded")
+	@RequestMapping(value = "/signIn", method = { RequestMethod.GET,RequestMethod.POST}, consumes="application/json", headers = "content-type=application/x-www-form-urlencoded")
 	public String signIn(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, ClassNotFoundException, SQLException {		
 		ObjectMapper mapper = new ObjectMapper();
 		BufferedReader reader = request.getReader();
@@ -98,7 +98,7 @@ public class RestControllers {
 		if(agentPW.equals(db_info.getAgentPW())) {	//비밀번호 일치 확인
 			response_data.setResult(true);
 			String jwt = jws.create(agentID);		//로그인 토큰 생성
-			response.setHeader("Authorization",jwt);
+			response_data.setJwtString(jwt);
 
 			String returnData = mapper.writeValueAsString(response_data);
 			return returnData;

@@ -1,4 +1,4 @@
-package com.check_in.dao;
+package proj.checkIN.DB;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,20 +12,20 @@ import org.springframework.stereotype.Repository;
 import com.check_in.dto.UserSiteInformationDTO;
 
 @Repository
-public class UserSiteInformationDAO {
-    private static UserSiteInformationDAO usiDao;
+public class UserSiteInformationDAOImpl implements UserSiteInformationDAO {
+    private static UserSiteInformationDAOImpl usiDao;
     private MariaDBConnector mdbc = MariaDBConnector.getInstance();
 
-    Connection con;
-    PreparedStatement pstmt;
-    ResultSet rs;
-    StringBuffer query;
+    private Connection con;
+    private PreparedStatement pstmt;
+    private ResultSet rs;
+    private StringBuffer query;
 
-    private UserSiteInformationDAO() {}
+    private UserSiteInformationDAOImpl() {}
 
-    public static UserSiteInformationDAO getInstance() {
+    public static UserSiteInformationDAOImpl getInstance() {
         if(usiDao == null) {
-            usiDao = new UserSiteInformationDAO();
+            usiDao = new UserSiteInformationDAOImpl();
         }
         return usiDao;
     }
@@ -38,7 +38,7 @@ public class UserSiteInformationDAO {
 
         con = mdbc.getConnection();
         query = new StringBuffer();
-        query.append("SELECT * FROM UserSiteInformation WHERE ID = ? AND Name = ?");
+        query.append("SELECT * FROM UserSiteInformation WHERE agentID = ? AND name = ?");
 
         pstmt = con.prepareStatement(query.toString());
         pstmt.setString(1, dto.getAgentID());
@@ -47,11 +47,11 @@ public class UserSiteInformationDAO {
         rs = pstmt.executeQuery();
         UserSiteInformationDTO ret = new UserSiteInformationDTO();
         while(rs.next()) {
-            ret.setAgentID(rs.getString("ID"));
-            ret.setName(rs.getString("Name"));
+            ret.setAgentID(rs.getString("agentID"));
+            ret.setName(rs.getString("name"));
             ret.setURL(rs.getString("URL"));
-            ret.setID(rs.getString("SiteID"));
-            ret.setPW(rs.getString("SitePassword"));
+            ret.setID(rs.getString("ID"));
+            ret.setPW(rs.getString("PW"));
         }
 
         disconnect();
@@ -66,7 +66,7 @@ public class UserSiteInformationDAO {
 
         con = mdbc.getConnection();
         query = new StringBuffer();
-        query.append("SELECT * FROM UserSiteInformation WHERE ID = ?");
+        query.append("SELECT * FROM UserSiteInformation WHERE agentID = ?");
 
         pstmt = con.prepareStatement(query.toString());
         pstmt.setString(1, dto.getAgentID());
@@ -75,11 +75,11 @@ public class UserSiteInformationDAO {
         List<UserSiteInformationDTO> dtos = new ArrayList<UserSiteInformationDTO>();
         while(rs.next()) {
             UserSiteInformationDTO uto = new UserSiteInformationDTO();
-            uto.setAgentID(rs.getString("ID"));
-            uto.setName(rs.getString("Name"));
+            uto.setAgentID(rs.getString("agentID"));
+            uto.setName(rs.getString("name"));
             uto.setURL(rs.getString("URL"));
-            uto.setID(rs.getString("SiteID"));
-            uto.setPW(rs.getString("SitePassword"));
+            uto.setID(rs.getString("ID"));
+            uto.setPW(rs.getString("PW"));
             dtos.add(uto);
         }
 
@@ -123,7 +123,7 @@ public class UserSiteInformationDAO {
 
         con = mdbc.getConnection();
         query = new StringBuffer();
-        query.append("UPDATE UserSiteInformation SET URL = ?, SiteID = ?, SitePassword = ? WHERE ID = ? and Name = ?");
+        query.append("UPDATE UserSiteInformation SET URL = ?, ID = ?, PW = ? WHERE agentID = ? and name = ?");
 
         pstmt = con.prepareStatement(query.toString());
         pstmt.setString(1, dto.getURL());
@@ -140,7 +140,7 @@ public class UserSiteInformationDAO {
     public void delete(UserSiteInformationDTO dto) throws SQLException, ClassNotFoundException {
         con = mdbc.getConnection();
         query = new StringBuffer();
-        query.append("DELETE FROM UserSiteInformation WHERE ID = ? AND Name = ?");
+        query.append("DELETE FROM UserSiteInformation WHERE agentID = ? AND name = ?");
 
         pstmt = con.prepareStatement(query.toString());
         pstmt.setString(1, dto.getAgentID());
@@ -150,10 +150,19 @@ public class UserSiteInformationDAO {
         disconnect();
     }
 
+    public boolean isKey(UserSiteInformationDTO dto) throws SQLException, ClassNotFoundException {
+        int cnt = existKey(dto);  // 기존 데이터와 키값 중복 여부 확인
+
+        if(cnt != 0)
+            return true;
+        else
+            return false;
+    }
+
     private int existAccount(UserSiteInformationDTO dto) throws SQLException, ClassNotFoundException {
         con = mdbc.getConnection();
         query = new StringBuffer();
-        query.append("SELECT COUNT(*) AS cnt FROM UserSiteInformation WHERE ID = ?");
+        query.append("SELECT COUNT(*) AS cnt FROM UserSiteInformation WHERE agentID = ?");
         pstmt = con.prepareStatement(query.toString());
         pstmt.setString(1, dto.getAgentID());
         rs = pstmt.executeQuery();
@@ -168,7 +177,7 @@ public class UserSiteInformationDAO {
     private int existKey(UserSiteInformationDTO dto) throws SQLException, ClassNotFoundException {
         con = mdbc.getConnection();
         query = new StringBuffer();
-        query.append("SELECT COUNT(*) AS cnt FROM UserSiteInformation WHERE ID = ? AND Name = ?");
+        query.append("SELECT COUNT(*) AS cnt FROM UserSiteInformation WHERE agentID = ? AND name = ?");
         pstmt = con.prepareStatement(query.toString());
         pstmt.setString(1, dto.getAgentID());
         pstmt.setString(2, dto.getName());
@@ -181,20 +190,11 @@ public class UserSiteInformationDAO {
         return ret;
     }
 
-    public void disconnect() throws SQLException {
+    private void disconnect() throws SQLException {
         if(rs != null) {
             rs.close();
         }
         pstmt.close();
         con.close();
-    }
-    
-    public boolean isKey(UserSiteInformationDTO dto) throws SQLException, ClassNotFoundException {
-        int cnt = existKey(dto);  // 기존 데이터와 키값 중복 여부 확인
-
-        if(cnt != 0)
-            return true;
-        else
-            return false;
     }
 }

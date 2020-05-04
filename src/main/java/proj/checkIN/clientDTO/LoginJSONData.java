@@ -1,8 +1,8 @@
-package proj.checkIN.androidDTO;
+package proj.checkIN.clientDTO;
 
 public class LoginJSONData {
-    private String id;
-    private String pwd;
+    private String agentID;
+    private String agentPW;
     private String UUID;
     private String jwtString;
 	private boolean result;
@@ -27,24 +27,24 @@ public class LoginJSONData {
     	
     }
     
-    public LoginJSONData(String id, String pwd, String UUID) {
-        this.id = id;
-        this.pwd = pwd;
+    public LoginJSONData(String agentID, String agentPW, String UUID) {
+        this.agentID = agentID;
+        this.agentPW = agentPW;
         this.UUID = UUID;
     }
 
     public String getId() {
-        return id;
+        return agentID;
     }
 
     public void setId(String id) {
-        this.id = id;
+        this.agentID = id;
     }
 
-    public String getPwd() { return pwd; }
+    public String getPwd() { return agentPW; }
 
-    public void setPwd(String pwd) {
-        this.pwd = pwd;
+    public void setPwd(String agentPW) {
+        this.agentPW = agentPW;
     }
 
     public String getUUID() {

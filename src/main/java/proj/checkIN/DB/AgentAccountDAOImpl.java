@@ -1,4 +1,4 @@
-package com.check_in.dao;
+package proj.checkIN.DB;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,20 +10,20 @@ import org.springframework.stereotype.Repository;
 import com.check_in.dto.AgentAccountDTO;
 
 @Repository
-public class AgentAccountDAO implements DAO {
-    private static AgentAccountDAO aaDao;
+public class AgentAccountDAOImpl implements AgentAccountDAO {
+    private static AgentAccountDAOImpl aaDao;
     private MariaDBConnector mdbc = MariaDBConnector.getInstance();
 
-    Connection con;
-    PreparedStatement pstmt;
-    ResultSet rs;
-    StringBuffer query;
+    private Connection con;
+    private PreparedStatement pstmt;
+    private ResultSet rs;
+    private StringBuffer query;
 
-    private AgentAccountDAO() {}
+    private AgentAccountDAOImpl() {}
 
-    public static AgentAccountDAO getInstance() {
+    public static AgentAccountDAOImpl getInstance() {
         if(aaDao == null) {
-            aaDao = new AgentAccountDAO();
+            aaDao = new AgentAccountDAOImpl();
         }
         return aaDao;
     }
@@ -36,7 +36,7 @@ public class AgentAccountDAO implements DAO {
 
         con = mdbc.getConnection();
         query = new StringBuffer();
-        query.append("SELECT * FROM AgentAccount WHERE ID = ?");
+        query.append("SELECT * FROM AgentAccount WHERE agentID = ?");
 
         pstmt = con.prepareStatement(query.toString());
         pstmt.setString(1, dto.getAgentID());
@@ -44,11 +44,11 @@ public class AgentAccountDAO implements DAO {
         rs = pstmt.executeQuery();
         AgentAccountDTO ret = new AgentAccountDTO();
         while(rs.next()) {
-            ret.setAgentID(rs.getString("ID"));
-            ret.setAgentPW(rs.getString("Password"));
-            ret.setName(rs.getString("Name"));
-            ret.setErrorCount(rs.getInt("ErrorCount"));
-            ret.setNumberOfDevice(rs.getInt("NumberOfDevice"));
+            ret.setAgentID(rs.getString("agentID"));
+            ret.setAgentPW(rs.getString("agentPW"));
+            ret.setName(rs.getString("name"));
+            ret.setErrorCount(rs.getInt("errorCount"));
+            ret.setNumberOfDevice(rs.getInt("numberOfDevice"));
         }
 
         disconnect();
@@ -91,7 +91,7 @@ public class AgentAccountDAO implements DAO {
 
         con = mdbc.getConnection();
         query = new StringBuffer();
-        query.append("UPDATE AgentAccount SET Password = ?, Name = ?, ErrorCount = ?, NumberOfDevice = ? WHERE ID = ?");
+        query.append("UPDATE AgentAccount SET agentPW = ?, name = ?, errorCount = ?, numberOfDevice = ? WHERE agentID = ?");
 
         pstmt = con.prepareStatement(query.toString());
         pstmt.setString(1, dto.getAgentPW());
@@ -109,7 +109,7 @@ public class AgentAccountDAO implements DAO {
     private int existAccount(AgentAccountDTO dto) throws SQLException, ClassNotFoundException {
         con = mdbc.getConnection();
         query = new StringBuffer();
-        query.append("SELECT COUNT(*) AS cnt FROM AgentAccount WHERE ID = ?");
+        query.append("SELECT COUNT(*) AS cnt FROM AgentAccount WHERE agentID = ?");
         pstmt = con.prepareStatement(query.toString());
         pstmt.setString(1, dto.getAgentID());
         rs = pstmt.executeQuery();
@@ -121,36 +121,10 @@ public class AgentAccountDAO implements DAO {
         return ret;
     }
 
-    public synchronized int updatePW(AgentAccountDTO dto) throws SQLException, ClassNotFoundException {
-        int cnt = existAccount(dto);  // 변경할 데이터 존재 여부 확인
-
-        if(cnt == 0)
-            return 0;
-
-        AgentAccountDTO origin = read(dto);  // 변경 사항 유무 확인
-        if(origin.getAgentPW().equals(dto.getAgentPW())) {
-            return 0;
-        }
-
-        con = mdbc.getConnection();
-        query = new StringBuffer();
-
-        query.append("UPDATE AgentAccount SET Password = ? WHERE ID = ?");
-
-        pstmt = con.prepareStatement(query.toString());
-        pstmt.setString(1, dto.getAgentPW());
-        pstmt.setString(2, dto.getAgentID());
-
-        pstmt.executeUpdate();
-        disconnect();
-
-        return 1;
-    }
-
     public void delete(AgentAccountDTO dto) throws SQLException, ClassNotFoundException {
         con = mdbc.getConnection();
         query = new StringBuffer();
-        query.append("DELETE FROM AgentAccount WHERE ID = ?");
+        query.append("DELETE FROM AgentAccount WHERE agentID = ?");
 
         pstmt = con.prepareStatement(query.toString());
         pstmt.setString(1, dto.getAgentID());
@@ -159,14 +133,6 @@ public class AgentAccountDAO implements DAO {
         disconnect();
     }
 
-    public void disconnect() throws SQLException {
-        if(rs != null) {
-            rs.close();
-        }
-        pstmt.close();
-        con.close();
-    }
-    
     public boolean isKey(AgentAccountDTO dto) throws SQLException, ClassNotFoundException {
         int cnt = existAccount(dto);  // 기존 데이터와 키값 중복 여부 확인
 
@@ -174,5 +140,13 @@ public class AgentAccountDAO implements DAO {
             return true;
         else
             return false;
+    }
+
+    private void disconnect() throws SQLException {
+        if(rs != null) {
+            rs.close();
+        }
+        pstmt.close();
+        con.close();
     }
 }

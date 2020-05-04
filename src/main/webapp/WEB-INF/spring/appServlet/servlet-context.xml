@@ -21,12 +21,12 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>	
 	
-	<context:component-scan base-package="com.inghhk.checkIN, com.check_in.dao, proj.checkIN.modules, proj.checkIN.controllers, proj.checkIN.services" />
+	<context:component-scan base-package="com.inghhk.checkIN, proj.checkIN.modules, proj.checkIN.controllers, proj.checkIN.services, proj.checkIN.DB" />
 	
-	<beans:bean id="agentAccountDAO" class="com.check_in.dao.AgentAccountDAO" />
+	<beans:bean id="agentAccountDAOImpl" class="proj.checkIN.DB.AgentAccountDAOImpl" />
+	<beans:bean id="tokenKeyDAOImpl" class="proj.checkIN.DB.TokenKeyDAOImpl"/>	
 	<beans:bean id="emailHandlerImpl" class="proj.checkIN.services.EmailHandlerImpl" />
 	<beans:bean id="Encoder" class="proj.checkIN.services.Encoder"/>
-	<beans:bean id="tokenKeyDAOImpl" class="com.check_in.dao.TokenKeyDAOImpl"/>
 	
 	
 </beans:beans>
