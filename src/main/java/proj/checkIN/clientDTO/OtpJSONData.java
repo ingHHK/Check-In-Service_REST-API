@@ -1,4 +1,4 @@
-package JSONData;
+package proj.checkIN.clientDTO;
 
 public class OtpJSONData {
 	String otpCode;

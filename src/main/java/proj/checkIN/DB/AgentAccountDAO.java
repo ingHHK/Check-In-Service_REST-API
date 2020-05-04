@@ -1,7 +1,5 @@
 package proj.checkIN.DB;
 
-import com.check_in.dto.AgentAccountDTO;
-
 import java.sql.SQLException;
 
 public interface AgentAccountDAO {

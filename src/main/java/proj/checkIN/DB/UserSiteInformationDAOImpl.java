@@ -9,8 +9,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.check_in.dto.UserSiteInformationDTO;
-
 @Repository
 public class UserSiteInformationDAOImpl implements UserSiteInformationDAO {
     private static UserSiteInformationDAOImpl usiDao;

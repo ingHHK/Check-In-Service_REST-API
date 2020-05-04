@@ -7,8 +7,6 @@ import java.sql.SQLException;
 
 import org.springframework.stereotype.Repository;
 
-import com.check_in.dto.AgentAccountDTO;
-
 @Repository
 public class AgentAccountDAOImpl implements AgentAccountDAO {
     private static AgentAccountDAOImpl aaDao;

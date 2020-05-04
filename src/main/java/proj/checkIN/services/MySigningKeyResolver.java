@@ -6,12 +6,11 @@ import java.util.Base64;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
-import com.check_in.dto.TokenKeyDTO;
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwsHeader;
 import io.jsonwebtoken.SigningKeyResolverAdapter;
 import proj.checkIN.DB.TokenKeyDAOImpl;
+import proj.checkIN.DB.TokenKeyDTO;
 
 public class MySigningKeyResolver extends SigningKeyResolverAdapter {
 	private TokenKeyDTO dto;

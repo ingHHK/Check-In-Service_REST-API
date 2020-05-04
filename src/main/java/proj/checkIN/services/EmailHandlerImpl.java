@@ -12,9 +12,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
-import com.check_in.dto.AgentAccountDTO;
-
 import proj.checkIN.DB.AgentAccountDAOImpl;
+import proj.checkIN.DB.AgentAccountDTO;
 
 @Service
 public class EmailHandlerImpl implements EmailHandler{

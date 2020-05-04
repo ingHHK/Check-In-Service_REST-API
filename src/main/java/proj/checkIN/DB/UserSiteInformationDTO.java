@@ -1,4 +1,4 @@
-package com.check_in.dto;
+package proj.checkIN.DB;
 
 public class UserSiteInformationDTO {
     private String agentID;

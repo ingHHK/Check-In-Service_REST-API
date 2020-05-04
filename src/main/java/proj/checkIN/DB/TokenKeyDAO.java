@@ -1,7 +1,5 @@
 package proj.checkIN.DB;
 
-import com.check_in.dto.TokenKeyDTO;
-
 import java.sql.SQLException;
 
 public interface TokenKeyDAO {

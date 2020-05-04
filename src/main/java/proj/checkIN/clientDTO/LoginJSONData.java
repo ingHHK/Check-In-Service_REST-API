@@ -5,27 +5,11 @@ public class LoginJSONData {
     private String agentPW;
     private String UUID;
     private String jwtString;
-	private boolean result;
-    
-    public String getJwtString() {
-		return jwtString;
-	}
-
-	public void setJwtString(String jwtString) {
-		this.jwtString = jwtString;
-	}
-
-    public boolean isResult() {
-		return result;
-	}
-
-	public void setResult(boolean result) {
-		this.result = result;
-	}
-
+	private boolean result;	
+	
 	public LoginJSONData() {
-    	
-    }
+		
+	}
     
     public LoginJSONData(String agentID, String agentPW, String UUID) {
         this.agentID = agentID;
@@ -33,25 +17,43 @@ public class LoginJSONData {
         this.UUID = UUID;
     }
 
-    public String getId() {
-        return agentID;
-    }
+	public String getAgentID() {
+		return agentID;
+	}
 
-    public void setId(String id) {
-        this.agentID = id;
-    }
+	public void setAgentID(String agentID) {
+		this.agentID = agentID;
+	}
 
-    public String getPwd() { return agentPW; }
+	public String getAgentPW() {
+		return agentPW;
+	}
 
-    public void setPwd(String agentPW) {
-        this.agentPW = agentPW;
-    }
+	public void setAgentPW(String agentPW) {
+		this.agentPW = agentPW;
+	}
 
-    public String getUUID() {
-        return UUID;
-    }
+	public String getUUID() {
+		return UUID;
+	}
 
-    public void setUUID(String UUID) {
-        this.UUID = UUID;
-    }
+	public void setUUID(String uUID) {
+		UUID = uUID;
+	}
+
+	public String getJwtString() {
+		return jwtString;
+	}
+
+	public void setJwtString(String jwtString) {
+		this.jwtString = jwtString;
+	}
+
+	public boolean isResult() {
+		return result;
+	}
+
+	public void setResult(boolean result) {
+		this.result = result;
+	}
 }

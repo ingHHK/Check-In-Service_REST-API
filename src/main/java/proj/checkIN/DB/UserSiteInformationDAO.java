@@ -1,7 +1,5 @@
 package proj.checkIN.DB;
 
-import com.check_in.dto.UserSiteInformationDTO;
-
 import java.sql.SQLException;
 import java.util.List;
 

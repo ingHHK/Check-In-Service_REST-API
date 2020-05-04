@@ -7,8 +7,6 @@ import java.sql.SQLException;
 
 import org.springframework.stereotype.Repository;
 
-import com.check_in.dto.TokenKeyDTO;
-
 @Repository
 public class TokenKeyDAOImpl implements TokenKeyDAO {
     private static TokenKeyDAOImpl tkDao;

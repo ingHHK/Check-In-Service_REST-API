@@ -1,4 +1,4 @@
-package com.inghhk.checkIN;
+package proj.checkIN.controllers;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -13,27 +13,28 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.check_in.dto.TokenKeyDTO;
-import com.check_in.dto.UserSiteInformationDTO;
-
-import proj.checkIN.DB.AgentAccountDAOImpl;
+import proj.checkIN.DB.AgentAccountDAO;
 import proj.checkIN.DB.TokenKeyDAOImpl;
-import proj.checkIN.DB.UserSiteInformationDAOImpl;
+import proj.checkIN.DB.TokenKeyDTO;
+import proj.checkIN.DB.UserSiteInformationDAO;
+import proj.checkIN.DB.UserSiteInformationDTO;
 import proj.checkIN.services.EmailHandlerImpl;
 import proj.checkIN.services.Encoder;
 import proj.checkIN.services.JWTServiceImpl;
 
+@CrossOrigin(origins="*")
 @Controller
 public class PageController {
 	@Autowired
 	EmailHandlerImpl email;
 	@Autowired
-	AgentAccountDAOImpl agentDAO;
+	AgentAccountDAO agentDAO;
 	@Autowired
-	UserSiteInformationDAOImpl infoDAO;
+	UserSiteInformationDAO infoDAO;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {		

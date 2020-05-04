@@ -8,8 +8,6 @@ import javax.crypto.SecretKey;
 
 import org.springframework.stereotype.Service;
 
-import com.check_in.dto.TokenKeyDTO;
-
 import io.jsonwebtoken.ClaimJwtException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -22,6 +20,7 @@ import io.jsonwebtoken.SigningKeyResolver;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.Keys;
 import proj.checkIN.DB.TokenKeyDAOImpl;
+import proj.checkIN.DB.TokenKeyDTO;
 
 @Service
 public class JWTServiceImpl implements JWTService{
