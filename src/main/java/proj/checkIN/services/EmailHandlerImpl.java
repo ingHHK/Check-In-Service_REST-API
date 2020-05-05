@@ -59,7 +59,7 @@ public class EmailHandlerImpl implements EmailHandler{
 		
 		Session session = Session.getDefaultInstance(prop, new javax.mail.Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication("checkin.service.team@gmail.com", "jgpfswziiadqxzfj");
+				return new PasswordAuthentication("checkin.service.team@gmail.com", "//second pw");
 			}
 		});
 		
