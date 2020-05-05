@@ -26,7 +26,7 @@ import proj.checkIN.clientDTO.LoginJSONData;
 import proj.checkIN.services.EmailHandlerImpl;
 import proj.checkIN.services.JWTServiceImpl;
 
-@CrossOrigin
+@CrossOrigin(origins="*")
 @RestController
 public class RestControllers {
 	@Autowired
@@ -95,9 +95,7 @@ public class RestControllers {
 		db_arg.setAgentID(agentID);
 		AgentAccountDTO db_info = account.read(db_arg);
 		response_data.setAgentID(request_data.getAgentID());
-		
-		response.setHeader("Access-Control-Allow-Origin", "*");
-		
+				
 		if(agentPW.equals(db_info.getAgentPW())) {	//비밀번호 일치 확인
 			response_data.setResult(true);
 			String jwt = jws.create(agentID);		//로그인 토큰 생성
@@ -143,7 +141,6 @@ public class RestControllers {
 			response_data.setResult(false);
 		}
 		
-		response.setHeader("Access-Control-Allow-Origin", "*");
 		String returnData = mapper.writeValueAsString(response_data);
 		return returnData;
 	}
