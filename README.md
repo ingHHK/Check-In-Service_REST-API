@@ -156,7 +156,7 @@
   }
 ~~~
 
-### **POST /acceessLog<br>**
+### **POST /accessLog<br>**
 :sign-in the Check-In service app<br>
 #### Request Data
 ~~~
