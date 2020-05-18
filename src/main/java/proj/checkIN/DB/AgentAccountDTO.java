@@ -4,10 +4,8 @@ public class AgentAccountDTO {
 	private String agentID;
     private String agentPW;
     private String name;
-    
-    private boolean result;
     private String verify_code;
-    
+    private boolean result;
 
 	private int errorCount;
     private int numberOfDevice;

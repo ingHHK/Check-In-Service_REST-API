@@ -1,14 +1,34 @@
 package proj.checkIN.DB;
 
+import java.util.List;
+
 public class UserSiteInformationDTO {
     private String agentID;
     private String name;
     private String URL;
-    private String ID;
+	private String ID;
     private String PW;
+    private String jwt;
+    private List<UserSiteInformationDTO> list;
     private boolean result;
+    
+    public List<UserSiteInformationDTO> getList() {
+		return list;
+	}
 
-    public boolean isResult() {
+	public void setList(List<UserSiteInformationDTO> list) {
+		this.list = list;
+	}
+
+    public String getJwt() {
+		return jwt;
+	}
+
+	public void setJwt(String jwt) {
+		this.jwt = jwt;
+	}
+
+	public boolean isResult() {
 		return result;
 	}
 

@@ -25,6 +25,7 @@ import proj.checkIN.DB.UserSiteInformationDTO;
 import proj.checkIN.services.EmailHandlerImpl;
 import proj.checkIN.services.Encoder;
 import proj.checkIN.services.JWTServiceImpl;
+import proj.checkIN.services.RedisService;
 
 @CrossOrigin(origins="*")
 @Controller
@@ -53,6 +54,27 @@ public class PageController {
 		String mail = "inghyunho@naver.com";
 		System.out.println(mail);
 		email.mailSending(mail);
+		
+		return "sendOK";
+	}
+	
+	@RequestMapping(value = "/testAdd", method = RequestMethod.GET)
+	public String testAdd(HttpServletRequest request) throws IOException, ServletException, ClassNotFoundException, SQLException {		
+		String agentID = "abcd@naver.com";
+		String name = "상명대";
+		String URL = "www.smu.ac.kr";
+		String ID = "SNU";
+		String PW = "674839";
+		
+		UserSiteInformationDTO info = new UserSiteInformationDTO();
+		info.setAgentID(agentID);
+		info.setID(ID);
+		info.setName(name);
+		info.setPW(PW);
+		info.setURL(URL);
+		info.setResult(true);
+		
+		infoDAO.insert(info);
 		
 		return "sendOK";
 	}
@@ -103,6 +125,20 @@ public class PageController {
 		System.out.println(encoder.sha256("inghyunho@naver.com"));
 		System.out.println(encoder.sha256("inghyunho@naver.com"));
 		System.out.println(encoder.sha256("inghyunho@naver.con"));
+		return "sendOK";
+	}
+	
+	@RequestMapping(value = "/redis_set", method = RequestMethod.GET)
+	public String redis_set(HttpServletRequest request) throws IOException, ServletException, ClassNotFoundException, SQLException, NoSuchAlgorithmException {		
+		RedisService redis = new RedisService();
+		redis.test_set();
+		return "sendOK";
+	}
+	
+	@RequestMapping(value = "/redis_del", method = RequestMethod.GET)
+	public String redis_del(HttpServletRequest request) throws IOException, ServletException, ClassNotFoundException, SQLException, NoSuchAlgorithmException {		
+		RedisService redis = new RedisService();
+		redis.test_del();
 		return "sendOK";
 	}
 }

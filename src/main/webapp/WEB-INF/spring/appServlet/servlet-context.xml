@@ -23,10 +23,9 @@
 	
 	<context:component-scan base-package="com.inghhk.checkIN, proj.checkIN.modules, proj.checkIN.controllers, proj.checkIN.services, proj.checkIN.DB" />
 	
-	<beans:bean id="agentAccountDAOImpl" class="proj.checkIN.DB.AgentAccountDAOImpl" />
+	<beans:bean id="agentAccountDAOImpl" class="proj.checkIN.DB.AgentAccountDAOImpl"/>
 	<beans:bean id="tokenKeyDAOImpl" class="proj.checkIN.DB.TokenKeyDAOImpl"/>	
-	<beans:bean id="emailHandlerImpl" class="proj.checkIN.services.EmailHandlerImpl" />
-	<beans:bean id="Encoder" class="proj.checkIN.services.Encoder"/>
-	
+	<beans:bean id="emailHandlerImpl" class="proj.checkIN.services.EmailHandlerImpl"/>
+	<beans:bean id="redisConfiguration" class="proj.checkIN.services.RedisConfiguration"/>
 	
 </beans:beans>

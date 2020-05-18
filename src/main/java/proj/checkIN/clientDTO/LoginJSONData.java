@@ -4,7 +4,7 @@ public class LoginJSONData {
     private String agentID;
     private String agentPW;
     private String UUID;
-    private String jwtString;
+    private String jwt;
 	private boolean result;	
 	
 	public LoginJSONData() {
@@ -41,12 +41,12 @@ public class LoginJSONData {
 		UUID = uUID;
 	}
 
-	public String getJwtString() {
-		return jwtString;
+	public String getJwt() {
+		return jwt;
 	}
 
-	public void setJwtString(String jwtString) {
-		this.jwtString = jwtString;
+	public void setJwt(String jwt) {
+		this.jwt = jwt;
 	}
 
 	public boolean isResult() {

@@ -50,6 +50,7 @@ public class JWTServiceImpl implements JWTService{
 
 		try {
 			TokenKeyDAOImpl token = TokenKeyDAOImpl.getInstance();
+			token.delete(dto);
 			token.insert(dto);
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block

@@ -6,8 +6,7 @@
 </head>
 <body>
 <h1>
-	여기는 Check-IN 서버 Main Page 입니다.<br>
-	서버 잘 켜져있어 이 새끼들아.
+	여기는 Check-In 서버 Test Page 입니다.<br>
 </h1>
 
 <P>  The time on the server is ${serverTime}. </P>

@@ -1,7 +1,5 @@
 package proj.checkIN.DB;
 
-import java.security.Key;
-
 public class TokenKeyDTO {
     private String agentID;
     private String token;
