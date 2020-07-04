@@ -72,6 +72,13 @@
     		<artifactId>jedis</artifactId>
     		<version>3.3.0</version>
   		</dependency>
+  		
+  		<!-- https://mvnrepository.com/artifact/com.rabbitmq/amqp-client -->
+		<dependency>
+    		<groupId>com.rabbitmq</groupId>
+    		<artifactId>amqp-client</artifactId>
+    		<version>5.8.0</version>
+		</dependency>
 		
 		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-pool2 -->
 		<dependency>

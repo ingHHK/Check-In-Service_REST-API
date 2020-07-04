@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.TimeoutException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +26,7 @@ import proj.checkIN.DB.UserSiteInformationDTO;
 import proj.checkIN.services.EmailHandlerImpl;
 import proj.checkIN.services.Encoder;
 import proj.checkIN.services.JWTServiceImpl;
+import proj.checkIN.services.RabbitMQ;
 import proj.checkIN.services.RedisService;
 
 @CrossOrigin(origins="*")
@@ -36,6 +38,8 @@ public class PageController {
 	AgentAccountDAO agentDAO;
 	@Autowired
 	UserSiteInformationDAO infoDAO;
+	@Autowired
+	RabbitMQ msgQ;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {		
@@ -139,6 +143,12 @@ public class PageController {
 	public String redis_del(HttpServletRequest request) throws IOException, ServletException, ClassNotFoundException, SQLException, NoSuchAlgorithmException {		
 		RedisService redis = new RedisService();
 		redis.test_del();
+		return "sendOK";
+	}
+	
+	@RequestMapping(value = "/rmq_test", method = RequestMethod.GET)
+	public String rmq_test(HttpServletRequest request) throws IOException, ServletException, ClassNotFoundException, SQLException, NoSuchAlgorithmException, TimeoutException {		
+		msgQ.test();
 		return "sendOK";
 	}
 }

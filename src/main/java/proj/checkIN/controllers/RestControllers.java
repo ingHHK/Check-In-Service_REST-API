@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
+import java.util.concurrent.TimeoutException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -32,9 +33,11 @@ import proj.checkIN.DB.UserSiteInformationDTO;
 import proj.checkIN.clientDTO.LoginJSONData;
 import proj.checkIN.clientDTO.M_LoginDTO;
 import proj.checkIN.clientDTO.M_LoginNumberDTO;
+import proj.checkIN.clientDTO.M_RemoteSignOutDTO;
 import proj.checkIN.services.CreateLoginNumber;
 import proj.checkIN.services.EmailHandlerImpl;
 import proj.checkIN.services.JWTServiceImpl;
+import proj.checkIN.services.RabbitMQ;
 import proj.checkIN.services.RedisService;
 
 @CrossOrigin(origins="*")
@@ -54,6 +57,8 @@ public class RestControllers {
 	TokenKeyDAOImpl tokenKey;
 	@Autowired
 	RedisService redis;
+	@Autowired
+	RabbitMQ msgQ;
 	
 	@RequestMapping(value = "/signUp/verifyEmail", method = RequestMethod.POST, consumes="application/json", headers = "content-type=application/x-www-form-urlencoded")
 	public String verifyEmail(HttpServletRequest request) throws IOException, ServletException {		
@@ -98,7 +103,7 @@ public class RestControllers {
 	}
 	
 	@RequestMapping(value = "/signIn", method = { RequestMethod.GET,RequestMethod.POST}, consumes="application/json", headers = "content-type=application/x-www-form-urlencoded")
-	public String signIn(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, ClassNotFoundException, SQLException {		
+	public String signIn(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, ClassNotFoundException, SQLException, TimeoutException, InterruptedException {		
 		ObjectMapper mapper = new ObjectMapper();
 		BufferedReader reader = request.getReader();
 		LoginJSONData request_data = mapper.readValue(reader, LoginJSONData.class);
@@ -123,7 +128,7 @@ public class RestControllers {
 			String jwt = jws.create(agentID);		//로그인 토큰 생성
 			response_data.setJwt(jwt);
 			response_data.setAgentID(agentID);
-			
+			msgQ.connect(agentID);
 			String returnData = mapper.writeValueAsString(response_data);
 			return returnData;
 		} else {
@@ -344,15 +349,17 @@ public class RestControllers {
 	}
 
 	@RequestMapping(value = "/remoteSignOut", method = RequestMethod.POST, consumes="application/json", headers = "content-type=application/x-www-form-urlencoded")
-	public String remoteSignOut(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, ClassNotFoundException, SQLException {		
+	public String remoteSignOut(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, ClassNotFoundException, SQLException, TimeoutException, InterruptedException {		
 		ObjectMapper mapper = new ObjectMapper();
 		BufferedReader reader = request.getReader();
-		M_LoginDTO request_data = mapper.readValue(reader, M_LoginDTO.class);
-		M_LoginDTO response_data = new M_LoginDTO();
+		M_RemoteSignOutDTO request_data = mapper.readValue(reader, M_RemoteSignOutDTO.class);
+		M_RemoteSignOutDTO response_data = new M_RemoteSignOutDTO();
 		
 		final String agentID = request_data.getAgentID();
 		response_data.setAgentID(agentID);
-				
+		
+		msgQ.send(agentID);
+		
 		String returnData = mapper.writeValueAsString(response_data);
 		return returnData;
 	}
