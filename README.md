@@ -1,8 +1,9 @@
 # Check-In Service API server
 
 ## API for PC Client
-### **POST /checkIN/signUp/signAccount<br>**
-:sign-up the Check-In service<br>
+
+### **POST /checkIN/signUp/verifyEmail<br>**
+:check if the e-mail is duplicate<br>
 #### Request Data
 ~~~
   body:
@@ -10,13 +11,19 @@
     "agentID": "회원가입 할 계정에 대한 이메일",
     "agentPW": "회원가입 할 계정에 대한 비밀번호",
     "name": "사용자 이름"
-    "errorCount": "로그인 시도 오류 횟수", (Default value = 0)
-    "numberOfDevice": "추가 등록한 모바일 기기의 개수", (Default value = 0)
   }
 ~~~
 
-### **POST /checkIN/signUp/verifyEmail<br>**
-:sign-up the Check-In service<br>
+#### Response Data
+~~~
+  body:
+  {
+    "result": "요청 결과", (성공 = 1, 실패 = 0)
+  }
+~~~
+
+### **POST /checkIN/signUp/signAccount<br>**
+:insert the account information to the database<br>
 #### Request Data
 ~~~
   body:
@@ -24,22 +31,160 @@
     "agentID": "회원가입 할 계정에 대한 이메일",
     "agentPW": "회원가입 할 계정에 대한 비밀번호",
     "name": "사용자 이름"
-    "errorCount": "로그인 시도 오류 횟수", (Default value = 0)
-    "numberOfDevice": "추가 등록한 모바일 기기의 개수", (Default value = 0)
+  }
+~~~
+
+#### Response Data
+~~~
+  body:
+  {
+    "result": "요청 결과"(성공 = 1, 실패 = 0)
   }
 ~~~
 
 ### **POST /signIn<br>**
-:sign-up the Check-In service<br>
+:login to the Check-In service<br>
 #### Request Data
 ~~~
   body:
   {
-    "agentID": "회원가입 할 계정에 대한 이메일",
-    "agentPW": "회원가입 할 계정에 대한 비밀번호",
-    "name": "사용자 이름"
-    "errorCount": "로그인 시도 오류 횟수", (Default value = 0)
-    "numberOfDevice": "추가 등록한 모바일 기기의 개수", (Default value = 0)
+    "agentID": "계정 이메일",
+    "agentPW": "계정 비밀번호"
+  }
+~~~
+
+#### Request Data
+~~~
+  body:
+  {
+    "agentID": "계정 이메일",
+    "jwt": "JSON Web Token",
+    "result": "요청 결과"(성공 = 1, 실패 = 0)
+  }
+~~~
+
+### **POST /signOut<br>**
+:logout from the Check-In service<br>
+#### Request Data
+~~~
+  body:
+  {
+    "agentID": "계정 이메일",
+    "jwt": "JSON Web Token"
+  }
+~~~
+
+#### Response Data
+~~~
+  body:
+  {
+    "agentID": "계정 이메일",
+    "jwt": "JSON Web Token",
+    "result": "요청 결과"(성공 = 1, 실패 0)
+  }
+~~~
+
+### **POST /siteAdd<br>**
+:add the web site information<br>
+#### Request Data
+~~~
+  body:
+  {
+    "agentID": "계정 이메일",
+    "name": "웹 사이트 이름",
+    "URL": "웹 사이트 URL",
+    "ID": "웹 사이트 ID",
+    "PW": "웹 사이트 PW",
+    "jwt": "JSON Web Token",
+    "result": "요청 결과"(성공 = 1, 실패 = 0)
+  }
+~~~
+
+#### Response Data
+~~~
+  body:
+  {
+    "agentID": "계정 이메일",
+    "jwt": "JSON Web Token",
+    "result": "요청 결과"(성공 = 1, 실패 0)
+  }
+~~~
+
+### **POST /siteEdit<br>**
+:edit the web site information<br>
+#### Request Data
+~~~
+  body:
+  {
+    "agentID": "계정 이메일",
+    "name": "웹 사이트 이름",
+    "URL": "웹 사이트 URL",
+    "ID": "웹 사이트 ID",
+    "PW": "웹 사이트 PW",
+    "jwt": "JSON Web Token",
+    "result": "요청 결과"(성공 = 1, 실패 = 0)
+  }
+~~~
+
+#### Response Data
+~~~
+  body:
+  {
+    "agentID": "계정 이메일",
+    "jwt": "JSON Web Token",
+    "result": "요청 결과"(성공 = 1, 실패 0)
+  }
+~~~
+
+### **POST /siteDelete<br>**
+:delete the web site information<br>
+#### Request Data
+~~~
+  body:
+  {
+    "agentID": "계정 이메일",
+    "name": "웹 사이트 이름",
+    "URL": "웹 사이트 URL",
+    "ID": "웹 사이트 ID",
+    "PW": "웹 사이트 PW",
+    "jwt": "JSON Web Token",
+    "result": "요청 결과"(성공 = 1, 실패 = 0)
+  }
+~~~
+
+#### Response Data
+~~~
+  body:
+  {
+    "agentID": "계정 이메일",
+    "jwt": "JSON Web Token",
+    "result": "요청 결과"(성공 = 1, 실패 0)
+  }
+~~~
+
+### **POST /siteRead<br>**
+:read the web site information<br>
+#### Request Data
+~~~
+  body:
+  {
+    "agentID": "계정 이메일",
+    "jwt": "JSON Web Token",
+    "result": "요청 결과"(성공 = 1, 실패 = 0)
+  }
+~~~
+
+#### Response Data
+~~~
+  body:
+  {
+    <List>
+    "agentID": "계정 이메일",
+    "name": "웹 사이트 이름",
+    "URL": "웹 사이트 URL",
+    "ID": "웹 사이트 ID",
+    "PW": "웹 사이트 PW",
+    "jwt": "JSON Web Token"
   }
 ~~~
 
@@ -51,7 +196,7 @@
   {
     "agentID": "ID",
     "loginNumber": "One-time alternative login number"
-    "jwt": "JSON Web Token", (Default value = 0)
+    "jwt": "JSON Web Token"
   }
 ~~~
 #### Response Data
@@ -59,66 +204,11 @@
   body:
   {
     "agentID": "ID",
-    "jwt": "JSON Web Token", (Default value = 0)
+    "jwt": "JSON Web Token"
     "result": "Result", (True = 1, JWT verify fail = 0, Login number fail = 2)
   }
 ~~~
 
-### **POST /signOut<br>**
-:sign-up the Check-In service<br>
-#### Request Data
-~~~
-  body:
-  {
-    "agentID": "회원가입 할 계정에 대한 이메일",
-    "agentPW": "회원가입 할 계정에 대한 비밀번호",
-    "name": "사용자 이름"
-    "errorCount": "로그인 시도 오류 횟수", (Default value = 0)
-    "numberOfDevice": "추가 등록한 모바일 기기의 개수", (Default value = 0)
-  }
-~~~
-
-### **POST /siteAdd<br>**
-:sign-up the Check-In service<br>
-#### Request Data
-~~~
-  body:
-  {
-    "agentID": "회원가입 할 계정에 대한 이메일",
-    "agentPW": "회원가입 할 계정에 대한 비밀번호",
-    "name": "사용자 이름"
-    "errorCount": "로그인 시도 오류 횟수", (Default value = 0)
-    "numberOfDevice": "추가 등록한 모바일 기기의 개수", (Default value = 0)
-  }
-~~~
-
-### **POST /siteEdit<br>**
-:sign-up the Check-In service<br>
-#### Request Data
-~~~
-  body:
-  {
-    "agentID": "회원가입 할 계정에 대한 이메일",
-    "agentPW": "회원가입 할 계정에 대한 비밀번호",
-    "name": "사용자 이름"
-    "errorCount": "로그인 시도 오류 횟수", (Default value = 0)
-    "numberOfDevice": "추가 등록한 모바일 기기의 개수", (Default value = 0)
-  }
-~~~
-
-### **POST /siteDelete<br>**
-:sign-up the Check-In service<br>
-#### Request Data
-~~~
-  body:
-  {
-    "agentID": "회원가입 할 계정에 대한 이메일",
-    "agentPW": "회원가입 할 계정에 대한 비밀번호",
-    "name": "사용자 이름"
-    "errorCount": "로그인 시도 오류 횟수", (Default value = 0)
-    "numberOfDevice": "추가 등록한 모바일 기기의 개수", (Default value = 0)
-  }
-~~~
 
 ## API for Mobile App
 ### **POST /signIn_M<br>**
