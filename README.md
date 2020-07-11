@@ -244,7 +244,6 @@
   {
     "jwt": "JSON Web Token",
     "result": "요청 결과", (성공 = 1, 실패 = 2),
-    "jwt": "JSON Web Token"
   }
 ~~~
 
