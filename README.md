@@ -210,7 +210,7 @@
 ~~~
 
 ### **POST /verifyCode<br>**
-:sending an email which include verifying code<br>
+:e-mailing which include verifying code<br>
 #### Request Data
 ~~~
   body:
