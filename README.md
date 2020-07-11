@@ -194,7 +194,7 @@
 ~~~
   body:
   {
-    "agentID": "ID",
+    "agentID": "계정 이메일",
     "loginNumber": "One-time alternative login number"
     "jwt": "JSON Web Token"
   }
@@ -203,12 +203,50 @@
 ~~~
   body:
   {
-    "agentID": "ID",
-    "jwt": "JSON Web Token"
-    "result": "Result", (True = 1, JWT verify fail = 0, Login number fail = 2)
+    "agentID": "계정 이메일",
+    "jwt": "JSON Web Token",
+    "result": "요청 결과", (성공 = 1, 실패 = 2)
   }
 ~~~
 
+### **POST /verifyCode<br>**
+:sending an email which include verifying code<br>
+#### Request Data
+~~~
+  body:
+  {
+    "agentID": "계정 이메일",
+    "jwt": "JSON Web Token"
+  }
+~~~
+#### Response Data
+~~~
+  body:
+  {
+    "result": "요청 결과", (성공 = 1, 실패 = 2),
+    "verify_code": "이메일로 발송된 확인 코드"
+  }
+~~~
+
+### **POST /verifyOTP<br>**
+:Verifying the one-time-password number<br>
+#### Request Data
+~~~
+  body:
+  {
+    "agentID": "계정 이메일",
+    "verify_code": "생성된 OTP 코드"
+  }
+~~~
+#### Response Data
+~~~
+  body:
+  {
+    "jwt": "JSON Web Token",
+    "result": "요청 결과", (성공 = 1, 실패 = 2),
+    "jwt": "JSON Web Token"
+  }
+~~~
 
 ## API for Mobile App
 ### **POST /signIn_M<br>**
