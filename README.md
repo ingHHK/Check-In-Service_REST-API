@@ -194,9 +194,7 @@
 ~~~
   body:
   {
-    "agentID": "계정 이메일",
     "loginNumber": "One-time alternative login number"
-    "jwt": "JSON Web Token"
   }
 ~~~
 #### Response Data
