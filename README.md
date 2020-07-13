@@ -126,7 +126,7 @@
   }
 ~~~
 
-### **POST /update/otp enable<br>**
+### **POST /update/otpEnable<br>**
 :update otp enable<br>
 #### Request Data
 ~~~
