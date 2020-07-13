@@ -6,6 +6,7 @@ import java.util.Date;
 
 import javax.crypto.SecretKey;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import io.jsonwebtoken.ClaimJwtException;
@@ -24,12 +25,15 @@ import proj.checkIN.DB.TokenKeyDTO;
 
 @Service
 public class JWTServiceImpl implements JWTService{
-//	@Autowired
-//	TokenKeyDAOImpl token;
+	@Autowired
+	RedisService redis;
+	
+	private static String MOBILE = "_M";
+	
 	private String stringKey;
 	SecretKey key;
 
-	public String create(String agentID) {
+	public String create(String agentID, boolean mobile_status) {
 		String keyId = agentID;		
 		
 		key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
@@ -43,7 +47,13 @@ public class JWTServiceImpl implements JWTService{
 				.setSubject("check-in_token")
 				.signWith(key)
 				.compact();
-
+		
+		if(mobile_status) {
+			redis.del(agentID+MOBILE);
+			redis.setToken(agentID+MOBILE, stringKey);
+			return jws;
+		}
+		
 		TokenKeyDTO dto = new TokenKeyDTO();
 		dto.setAgentID(agentID);
 		dto.setToken(stringKey);
@@ -60,12 +70,12 @@ public class JWTServiceImpl implements JWTService{
 	}
 	
 	@Override
-	public boolean validation(String jwsString, String agentID) {
+	public boolean validation(String jwsString, String agentID, boolean mobile_status) {
 		Jws<Claims> jws;
 		TokenKeyDTO dto = new TokenKeyDTO();
 		dto.setAgentID(agentID);
 		try {
-			SigningKeyResolver signingKeyResolver = new MySigningKeyResolver(dto);
+			SigningKeyResolver signingKeyResolver = new MySigningKeyResolver(dto, mobile_status);
 			jws = Jwts.parserBuilder()
 			.setSigningKeyResolver(signingKeyResolver)
 			.build()

@@ -4,5 +4,6 @@ import java.io.IOException;
 
 public interface EmailHandler {
 	public boolean isDuplicate(String agentID);
-	public String mailSending(String e_mail)throws IOException;
+	public String signUpEmail(String e_mail) throws IOException;
+	public String verifyCodeEmail(String e_mail) throws IOException;
 }

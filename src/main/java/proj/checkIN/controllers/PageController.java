@@ -53,15 +53,6 @@ public class PageController {
 		return "home";
 	}
 	
-	@RequestMapping(value = "/testEmail", method = RequestMethod.GET)
-	public String testEmail(HttpServletRequest request) throws IOException, ServletException, ClassNotFoundException, SQLException {		
-		String mail = "inghyunho@naver.com";
-		System.out.println(mail);
-		email.mailSending(mail);
-		
-		return "sendOK";
-	}
-	
 	@RequestMapping(value = "/testAdd", method = RequestMethod.GET)
 	public String testAdd(HttpServletRequest request) throws IOException, ServletException, ClassNotFoundException, SQLException {		
 		String agentID = "abcd@naver.com";
@@ -87,7 +78,6 @@ public class PageController {
 	public String testDB(HttpServletRequest request) throws IOException, ServletException, ClassNotFoundException, SQLException {		
 		System.out.println("testDB()");
 		UserSiteInformationDTO dto = new UserSiteInformationDTO();
-		UserSiteInformationDTO dbdto = new UserSiteInformationDTO();
 		dto.setAgentID("abcd@naver.com");
 		dto.setName("구글");
 		dto.setID("abcd@gmail.com");
@@ -99,16 +89,16 @@ public class PageController {
 		return "sendOK";
 	}
 	
-	@RequestMapping(value = "/jwt", method = RequestMethod.GET)
-	public String testJWT(HttpServletRequest request) throws IOException, ServletException, ClassNotFoundException, SQLException {		
-		System.out.println("testJWT()");
-		JWTServiceImpl jwtService = new JWTServiceImpl();
-		String result = jwtService.create("abcd@naver.com");
-		System.out.println(result);
-		System.out.println(jwtService.validation(result, "abcd@naver.com"));
-		
-		return "sendOK";
-	}
+//	@RequestMapping(value = "/jwt", method = RequestMethod.GET)
+//	public String testJWT(HttpServletRequest request) throws IOException, ServletException, ClassNotFoundException, SQLException {		
+//		System.out.println("testJWT()");
+//		JWTServiceImpl jwtService = new JWTServiceImpl();
+//		String result = jwtService.create("abcd@naver.com");
+//		System.out.println(result);
+//		System.out.println(jwtService.validation(result, "abcd@naver.com"));
+//		
+//		return "sendOK";
+//	}
 	@RequestMapping(value = "/jwtd", method = RequestMethod.GET)
 	public String tesJWT(HttpServletRequest request) throws IOException, ServletException, ClassNotFoundException, SQLException {		
 		System.out.println("Delete JWT()");
@@ -138,14 +128,14 @@ public class PageController {
 		redis.test_set();
 		return "sendOK";
 	}
-	
-	@RequestMapping(value = "/redis_del", method = RequestMethod.GET)
-	public String redis_del(HttpServletRequest request) throws IOException, ServletException, ClassNotFoundException, SQLException, NoSuchAlgorithmException {		
-		RedisService redis = new RedisService();
-		redis.test_del();
-		return "sendOK";
-	}
-	
+//	
+//	@RequestMapping(value = "/redis_del", method = RequestMethod.GET)
+//	public String redis_del(HttpServletRequest request) throws IOException, ServletException, ClassNotFoundException, SQLException, NoSuchAlgorithmException {		
+//		RedisService redis = new RedisService();
+//		redis.test_del();
+//		return "sendOK";
+//	}
+//	
 	@RequestMapping(value = "/rmq_test", method = RequestMethod.GET)
 	public String rmq_test(HttpServletRequest request) throws IOException, ServletException, ClassNotFoundException, SQLException, NoSuchAlgorithmException, TimeoutException {		
 		msgQ.test();

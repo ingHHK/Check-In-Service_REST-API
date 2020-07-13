@@ -47,6 +47,7 @@ public class AgentAccountDAOImpl implements AgentAccountDAO {
             ret.setName(rs.getString("name"));
             ret.setErrorCount(rs.getInt("errorCount"));
             ret.setNumberOfDevice(rs.getInt("numberOfDevice"));
+            ret.setOtpEnable(rs.getInt("otpEnable"));
         }
 
         disconnect();
@@ -61,7 +62,7 @@ public class AgentAccountDAOImpl implements AgentAccountDAO {
 
         con = mdbc.getConnection();
         query = new StringBuffer();
-        query.append("INSERT INTO AgentAccount VALUES(?, ?, ?, ?, ?)");
+        query.append("INSERT INTO AgentAccount VALUES(?, ?, ?, ?, ?, ?)");
 
         pstmt = con.prepareStatement(query.toString());
         pstmt.setString(1, dto.getAgentID());
@@ -69,6 +70,7 @@ public class AgentAccountDAOImpl implements AgentAccountDAO {
         pstmt.setString(3, dto.getName());
         pstmt.setInt(4, dto.getErrorCount());
         pstmt.setInt(5, dto.getNumberOfDevice());
+        pstmt.setInt(6, dto.getOtpEnable());
 
         pstmt.executeUpdate();
         disconnect();
@@ -89,7 +91,7 @@ public class AgentAccountDAOImpl implements AgentAccountDAO {
 
         con = mdbc.getConnection();
         query = new StringBuffer();
-        query.append("UPDATE AgentAccount SET agentPW = ?, name = ?, errorCount = ?, numberOfDevice = ? WHERE agentID = ?");
+        query.append("UPDATE AgentAccount SET agentPW = ?, name = ?, errorCount = ?, numberOfDevice = ?, otpEnable = ? WHERE agentID = ?");
 
         pstmt = con.prepareStatement(query.toString());
         pstmt.setString(1, dto.getAgentPW());
@@ -97,6 +99,7 @@ public class AgentAccountDAOImpl implements AgentAccountDAO {
         pstmt.setInt(3, dto.getErrorCount());
         pstmt.setInt(4, dto.getNumberOfDevice());
         pstmt.setString(5, dto.getAgentID());
+        pstmt.setInt(6, dto.getOtpEnable());
 
         pstmt.executeUpdate();
         disconnect();

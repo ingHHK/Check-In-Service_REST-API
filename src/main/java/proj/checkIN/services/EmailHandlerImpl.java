@@ -44,7 +44,7 @@ public class EmailHandlerImpl implements EmailHandler{
 	}
 
 	@Override
-	public String mailSending(String e_mail) throws IOException{
+	public String signUpEmail(String e_mail) throws IOException{
 		Random r = new Random();
 		int dice = r.nextInt(4589362) + 49311;
 		
@@ -64,7 +64,6 @@ public class EmailHandlerImpl implements EmailHandler{
 		});
 		
 		String setfrom = "checkin.service.team@gmail.com";
-		String tomail = e_mail;
 		String title = "Check-IN 서비스 회원가입 인증 이메일 입니다.";
 		String content =
 				"안녕하세요 회원님, Check-IN 서비스를 찾아주셔서 감사합니다."
@@ -74,6 +73,50 @@ public class EmailHandlerImpl implements EmailHandler{
 				+System.getProperty("line.separator") +
 				System.getProperty("line.separator") +
 				"받으신 인증 번호를 에이전트에 입력해주시면 다음 단계로 넘어갑니다.";
+		try {
+			Message message = new MimeMessage(session);
+			message.setFrom(new InternetAddress(setfrom));
+			message.addRecipient(Message.RecipientType.TO, new InternetAddress(e_mail));
+			message.setSubject(title);
+			message.setText(content);
+			Transport.send(message);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return Integer.toString(dice);
+	}
+	
+	@Override
+	public String verifyCodeEmail(String e_mail) throws IOException{
+		Random r = new Random();
+		int dice = r.nextInt(4589362) + 49311;
+		
+		Properties prop = new Properties();
+		prop.put("mail.smtp.host", "smtp.gmail.com");
+		prop.put("mail.smtp.socketFactory.port", "465");
+		prop.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+		prop.put("mail.smtp.auth", "true");
+		prop.put("mail.smtp.port", "465");
+		prop.put("mail.smtp.ssl.checkserveridentity", "true");
+		prop.put("mail.debug", "true");
+		
+		Session session = Session.getDefaultInstance(prop, new javax.mail.Authenticator() {
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication("checkin.service.team@gmail.com", "jgpfswziiadqxzfj");
+			}
+		});
+		
+		String setfrom = "checkin.service.team@gmail.com";
+		String title = "Check-IN 서비스 인증 코드 발송 이메일 입니다.";
+		String content =
+				"안녕하세요 회원님,"
+				+System.getProperty("line.separator") +
+				System.getProperty("line.separator") +
+				"인증번호는 " + dice + "입니다."
+				+System.getProperty("line.separator") +
+				System.getProperty("line.separator") +
+				"받으신 인증 번호를 코드 입력 칸에 입력해주시면 다음 단계로 넘어갑니다.";
 		try {
 			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(setfrom));

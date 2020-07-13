@@ -34,7 +34,7 @@ public class RabbitMQ {
 		}
 	}
 	
-	public void send(String agentID) {
+	public boolean send(String agentID) {
 		try(Connection connection = factory.newConnection(); Channel channel = connection.createChannel()) {
 			channel.queueDeclare(QUEUE_NAME, false, false, true, null);
 			String message = "remote sign out";
@@ -43,9 +43,12 @@ public class RabbitMQ {
 			connection.close();
 		} catch(TimeoutException e) {
 			e.printStackTrace();
+			return false;
 		} catch(IOException e) {
 			e.printStackTrace();
+			return false;
 		}
+		return true;
 	}
 	
 	public void test() throws IOException, TimeoutException {

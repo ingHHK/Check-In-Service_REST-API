@@ -1,11 +1,13 @@
 package proj.checkIN.clientDTO;
 
-import java.util.ArrayList;
+import java.util.List;
+
+import proj.checkIN.DB.AgentAccountLogDTO;
 
 public class M_AccessLogDTO {
     private String agentID;
     private String jwt;
-	private ArrayList<M_AccessLogItem> accessLogItemArrayList;
+	private List<AgentAccountLogDTO> accessLogItemArrayList;
     private boolean result;
 
     public String getJwt() {
@@ -23,16 +25,16 @@ public class M_AccessLogDTO {
     public void setAgentID(String agentID) {
         this.agentID = agentID;
     }
+    
+    public List<AgentAccountLogDTO> getAccessLogItemArrayList() {
+		return accessLogItemArrayList;
+	}
 
-    public ArrayList<M_AccessLogItem> getAccessLogItemArrayList() {
-        return accessLogItemArrayList;
-    }
+	public void setAccessLogItemArrayList(List<AgentAccountLogDTO> accessLogItemArrayList) {
+		this.accessLogItemArrayList = accessLogItemArrayList;
+	}
 
-    public void setAccessLogItemArrayList(ArrayList<M_AccessLogItem> accessLogItemArrayList) {
-        this.accessLogItemArrayList = accessLogItemArrayList;
-    }
-
-    public boolean isResult() {
+	public boolean isResult() {
         return result;
     }
 

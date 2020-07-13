@@ -1,17 +1,18 @@
 package proj.checkIN.clientDTO;
 
-public class LoginJSONData {
+public class LoginDTO {
     private String agentID;
     private String agentPW;
     private String UUID;
     private String jwt;
 	private boolean result;	
+	private int otpEnable;
 	
-	public LoginJSONData() {
+	public LoginDTO() {
 		
 	}
     
-    public LoginJSONData(String agentID, String agentPW, String UUID) {
+    public LoginDTO(String agentID, String agentPW, String UUID) {
         this.agentID = agentID;
         this.agentPW = agentPW;
         this.UUID = UUID;
@@ -55,5 +56,13 @@ public class LoginJSONData {
 
 	public void setResult(boolean result) {
 		this.result = result;
+	}
+
+	public int getOtpEnable() {
+		return otpEnable;
+	}
+
+	public void setOtpEnable(int i) {
+		this.otpEnable = i;
 	}
 }

@@ -8,9 +8,11 @@ import javax.crypto.Mac;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
+import org.springframework.stereotype.Service;
 
+@Service
 public class CreateOTP{
-    public static int verify_code(String key, long t) throws NoSuchAlgorithmException, InvalidKeyException {
+    public int verify_code(String key, long t) throws NoSuchAlgorithmException, InvalidKeyException {
         byte[] data = new byte[8];
         long value = t / 1000;
 
@@ -37,14 +39,14 @@ public class CreateOTP{
         return (int) truncatedHash;
     }
 
-    public static boolean checkCode(String userCode, String otpkey) {
-        long otpnum = Integer.parseInt(userCode);
+    public boolean checkCode(String verify_code, String agentPW) {
+        long otpnum = Integer.parseInt(verify_code);
         long wave = new Date().getTime();
         boolean result = false;
         try {
             int window = 1000 * 60;
             for (int i = -window; i <= 1000; i += 1000) {
-                long hash = verify_code(otpkey, wave + i);
+                long hash = verify_code(agentPW, wave + i);
                 if (hash == otpnum)
                     result = true;
             }

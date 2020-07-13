@@ -6,7 +6,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
-
+	<context:annotation-config/>
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
 	<!-- Enables the Spring MVC @Controller programming model -->
@@ -24,7 +24,7 @@
 	<context:component-scan base-package="com.inghhk.checkIN, proj.checkIN.modules, proj.checkIN.controllers, proj.checkIN.services, proj.checkIN.DB" />
 	
 	<beans:bean id="agentAccountDAOImpl" class="proj.checkIN.DB.AgentAccountDAOImpl"/>
-	<beans:bean id="tokenKeyDAOImpl" class="proj.checkIN.DB.TokenKeyDAOImpl"/>	
+	<beans:bean id="tokenKeyDAOImpl" class="proj.checkIN.DB.TokenKeyDAOImpl"/>
 	<beans:bean id="emailHandlerImpl" class="proj.checkIN.services.EmailHandlerImpl"/>
 	<beans:bean id="redisConfiguration" class="proj.checkIN.services.RedisConfiguration"/>
 	
