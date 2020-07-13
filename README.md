@@ -85,6 +85,91 @@
   }
 ~~~
 
+### **POST /update/accountName<br>**
+:update account name<br>
+#### Request Data
+~~~
+  body:
+  {
+    "agentID": "계정 이메일",
+    "jwt": "JSON Web Token",
+    "accountName": "계정 이름"
+  }
+~~~
+
+#### Response Data
+~~~
+  body:
+  {
+    "result": "요청 결과"(성공 = 1, 실패 0)
+  }
+~~~
+
+### **POST /update/deviceEnable<br>**
+:update device enable<br>
+#### Request Data
+~~~
+  body:
+  {
+    "agentID": "계정 이메일",
+    "jwt": "JSON Web Token",
+    "deviceID": "기기 고유 ID",
+    "deviceEnable": "기기 사용 여부"(사용 = 1, 미사용 = 0)
+  }
+~~~
+
+#### Response Data
+~~~
+  body:
+  {
+    "result": "요청 결과"(성공 = 1, 실패 0)
+  }
+~~~
+
+### **POST /update/otp enable<br>**
+:update otp enable<br>
+#### Request Data
+~~~
+  body:
+  {
+    "agentID": "계정 이메일",
+    "jwt": "JSON Web Token",
+    "otpEnable": "기기 사용 여부"(사용 = 1, 미사용 = 0)
+  }
+~~~
+
+#### Response Data
+~~~
+  body:
+  {
+    "result": "요청 결과"(성공 = 1, 실패 0)
+  }
+~~~
+
+### **POST /deviceRead<br>**
+:read all devices<br>
+#### Request Data
+~~~
+  body:
+  {
+    "agentID": "계정 이메일",
+    "jwt": "JSON Web Token"
+  }
+~~~
+
+#### Response Data
+~~~
+  body:
+  {
+    <List>
+    "agentID": "계정 이메일",
+    "deviceID": "기기 고유 ID",
+    "deviceName": "사용자 정의 기기 이름",
+    "enrollmentDate": "기기 등록일",
+    "deviceEnable": "기기 사용 여부"
+  }
+~~~
+
 ### **POST /siteAdd<br>**
 :add the web site information<br>
 #### Request Data
