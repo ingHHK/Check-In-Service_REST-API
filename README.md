@@ -59,6 +59,7 @@
   {
     "agentID": "계정 이메일",
     "jwt": "JSON Web Token",
+    "otpEnalbe": "OTP 사용 여부"(사용 = 1, 미사용 = 0),
     "result": "요청 결과"(성공 = 1, 실패 = 0)
   }
 ~~~
@@ -194,7 +195,7 @@
 ~~~
   body:
   {
-    "loginNumber": "One-time alternative login number"
+    "verify_code": "One-time alternative login number"
   }
 ~~~
 #### Response Data
