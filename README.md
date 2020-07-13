@@ -114,7 +114,7 @@
     "agentID": "계정 이메일",
     "jwt": "JSON Web Token",
     "deviceID": "기기 고유 ID",
-    "deviceEnable": "기기 사용 여부"(사용 = 1, 미사용 = 0)
+    "deviceEnable": "기기 사용 여부"(사용 = true, 미사용 = false)
   }
 ~~~
 
