@@ -106,6 +106,57 @@ public class AgentAccountDAOImpl implements AgentAccountDAO {
 
         return 1;
     }
+    
+    public synchronized int updateAccountName(AgentAccountDTO dto) throws SQLException, ClassNotFoundException {
+        int cnt = existAccount(dto);  // 변경할 데이터 존재 여부 확인
+
+        if(cnt == 0)
+            return 0;
+
+        AgentAccountDTO origin = read(dto);  // 변경 사항 유무 확인
+        if(origin.getAgentPW().equals(dto.getAgentPW()) && origin.getName().equals(dto.getName()) && origin.getErrorCount() == dto.getErrorCount() && origin.getNumberOfDevice() == dto.getNumberOfDevice()) {
+            return 0;
+        }
+
+        con = mdbc.getConnection();
+        query = new StringBuffer();
+        query.append("UPDATE AgentAccount SET name = ? WHERE agentID = ?");
+
+        pstmt = con.prepareStatement(query.toString());
+        pstmt.setString(1, dto.getName());
+        pstmt.setString(2, dto.getAgentID());
+
+        pstmt.executeUpdate();
+        disconnect();
+
+        return 1;
+    }
+    
+    public synchronized int updateOTPEnable(AgentAccountDTO dto) throws SQLException, ClassNotFoundException {
+        int cnt = existAccount(dto);  // 변경할 데이터 존재 여부 확인
+
+        if(cnt == 0)
+            return 0;
+
+        AgentAccountDTO origin = read(dto);  // 변경 사항 유무 확인
+        if(origin.getAgentPW().equals(dto.getAgentPW()) && origin.getName().equals(dto.getName()) && origin.getErrorCount() == dto.getErrorCount() && origin.getNumberOfDevice() == dto.getNumberOfDevice()) {
+            return 0;
+        }
+
+        con = mdbc.getConnection();
+        query = new StringBuffer();
+        query.append("UPDATE AgentAccount SET otpEnable = ? WHERE agentID = ?");
+
+        pstmt = con.prepareStatement(query.toString());
+        pstmt.setInt(1, dto.getOtpEnable());
+        pstmt.setString(2, dto.getAgentID());
+
+        pstmt.executeUpdate();
+        disconnect();
+
+        return 1;
+    }
+   
 
     private int existAccount(AgentAccountDTO dto) throws SQLException, ClassNotFoundException {
         con = mdbc.getConnection();

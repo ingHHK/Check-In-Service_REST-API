@@ -3,7 +3,7 @@ package proj.checkIN.clientDTO;
 public class LoginDTO {
     private String agentID;
     private String agentPW;
-    private String UUID;
+    private String name;
     private String jwt;
 	private boolean result;	
 	private int otpEnable;
@@ -12,10 +12,10 @@ public class LoginDTO {
 		
 	}
     
-    public LoginDTO(String agentID, String agentPW, String UUID) {
+    public LoginDTO(String agentID, String agentPW, String name) {
         this.agentID = agentID;
         this.agentPW = agentPW;
-        this.UUID = UUID;
+        this.name = name;
     }
 
 	public String getAgentID() {
@@ -34,12 +34,12 @@ public class LoginDTO {
 		this.agentPW = agentPW;
 	}
 
-	public String getUUID() {
-		return UUID;
+	public String getName() {
+		return name;
 	}
 
-	public void setUUID(String uUID) {
-		UUID = uUID;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getJwt() {

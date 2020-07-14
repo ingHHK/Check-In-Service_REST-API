@@ -136,6 +136,31 @@ public class RemoteDeviceDAOImpl implements RemoteDeviceDAO {
         disconnect();
         return 1;
     }
+    
+    public synchronized int updateDeviceEnable(RemoteDeviceDTO dto) throws SQLException, ClassNotFoundException {
+        int cnt = existKey(dto);  // 변경할 데이터 존재 여부 확인
+
+        if(cnt == 0)
+            return 0;
+
+        RemoteDeviceDTO origin = read(dto);  // 변경 사항 유무 확인
+        if(origin.getDeviceName().equals(dto.getDeviceName()) && origin.getEnrollmentDate().equals(dto.getEnrollmentDate()) && origin.isDeviceEnable() == dto.isDeviceEnable()) {
+            return 0;
+        }
+
+        con = mdbc.getConnection();
+        query = new StringBuffer();
+        query.append("UPDATE RemoteDevice SET deviceEnable = ? WHERE agentID = ? and deviceID = ?");
+
+        pstmt = con.prepareStatement(query.toString());
+        pstmt.setBoolean(1, dto.isDeviceEnable());
+        pstmt.setString(2, dto.getAgentID());
+        pstmt.setString(3, dto.getDeviceID());
+
+        pstmt.executeUpdate();
+        disconnect();
+        return 1;
+    }
 
     public void delete(RemoteDeviceDTO dto) throws SQLException, ClassNotFoundException {
         con = mdbc.getConnection();

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CreateOTP{
-    public int verify_code(String key, long t) throws NoSuchAlgorithmException, InvalidKeyException {
+    public static int verify_code(String key, long t) throws NoSuchAlgorithmException, InvalidKeyException {
         byte[] data = new byte[8];
         long value = t / 1000;
 
@@ -39,14 +39,13 @@ public class CreateOTP{
         return (int) truncatedHash;
     }
 
-    public boolean checkCode(String verify_code, String agentPW) {
+    public static boolean checkCode(String verify_code, String deviceID, long wave) {
         long otpnum = Integer.parseInt(verify_code);
-        long wave = new Date().getTime();
         boolean result = false;
         try {
             int window = 1000 * 60;
             for (int i = -window; i <= 1000; i += 1000) {
-                long hash = verify_code(agentPW, wave + i);
+                long hash = verify_code(deviceID, wave + i);
                 if (hash == otpnum)
                     result = true;
             }
