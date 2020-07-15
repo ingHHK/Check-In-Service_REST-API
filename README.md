@@ -1,8 +1,8 @@
 # Check-In Service API server
-
+Default url: "host IP"/checkIN/
 ## API for PC Client
 
-### **POST /checkIN/signUp/verifyEmail<br>**
+### **POST /signUp/verifyEmail<br>**
 :check if the e-mail is duplicate<br>
 #### Request Data
 ~~~
@@ -22,7 +22,7 @@
   }
 ~~~
 
-### **POST /checkIN/signUp/signAccount<br>**
+### **POST /signUp/signAccount<br>**
 :insert the account information to the database<br>
 #### Request Data
 ~~~
