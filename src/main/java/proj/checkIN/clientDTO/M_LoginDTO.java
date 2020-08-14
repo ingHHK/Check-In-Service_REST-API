@@ -1,21 +1,12 @@
 package proj.checkIN.clientDTO;
 
-public class M_LoginDTO {
-	private String agentID;
+public class M_LoginDTO extends AccountIdentityDTO{
     private String agentPW;
     private String deviceID;
     private String deviceName;
-    private String jwt;    
 	private int result;
 
-	public String getJwt() {
-		return jwt;
-	}
-
-	public void setJwt(String jwt) {
-		this.jwt = jwt;
-	}
-
+	
 	 public int getResult() {
 		return result;
 	}
@@ -32,14 +23,6 @@ public class M_LoginDTO {
 		this.deviceName = deviceName;
 	}
 	
-	public String getAgentID() {
-        return agentID;
-    }
-
-    public void setAgentID(String agentID) {
-        this.agentID = agentID;
-    }
-
     public String getAgentPW() {
         return agentPW;
     }

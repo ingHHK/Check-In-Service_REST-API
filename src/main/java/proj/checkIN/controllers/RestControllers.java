@@ -34,12 +34,12 @@ import proj.checkIN.DB.TokenKeyDAOImpl;
 import proj.checkIN.DB.TokenKeyDTO;
 import proj.checkIN.DB.UserSiteInformationDAOImpl;
 import proj.checkIN.DB.UserSiteInformationDTO;
-import proj.checkIN.clientDTO.LoginDTO;
+import proj.checkIN.clientDTO.P_LoginDTO;
 import proj.checkIN.clientDTO.M_AccessLogDTO;
 import proj.checkIN.clientDTO.M_LoginDTO;
 import proj.checkIN.clientDTO.M_LoginNumberDTO;
 import proj.checkIN.clientDTO.M_RemoteSignOutDTO;
-import proj.checkIN.clientDTO.UpdateAccountDTO;
+import proj.checkIN.clientDTO.P_UpdateAccountDTO;
 import proj.checkIN.services.CreateLoginNumber;
 import proj.checkIN.services.CreateOTP;
 import proj.checkIN.services.EmailHandlerImpl;
@@ -114,8 +114,8 @@ public class RestControllers {
 	@RequestMapping(value = "/signIn", method = { RequestMethod.GET,RequestMethod.POST})
 	public Object signIn(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, ClassNotFoundException, SQLException, TimeoutException, InterruptedException {		
 		BufferedReader reader = request.getReader();
-		LoginDTO request_data = mapper.readValue(reader, LoginDTO.class);
-		LoginDTO response_data = new LoginDTO();
+		P_LoginDTO request_data = mapper.readValue(reader, P_LoginDTO.class);
+		P_LoginDTO response_data = new P_LoginDTO();
 		final String agentID = request_data.getAgentID();
 		final String agentPW = request_data.getAgentPW();
 		
@@ -162,8 +162,8 @@ public class RestControllers {
 		return response_data;
 	}
 	
-	private LoginDTO signIn(String agentID) throws IOException, ServletException, ClassNotFoundException, SQLException, TimeoutException, InterruptedException {		
-		LoginDTO response_data = new LoginDTO();
+	private P_LoginDTO signIn(String agentID) throws IOException, ServletException, ClassNotFoundException, SQLException, TimeoutException, InterruptedException {		
+		P_LoginDTO response_data = new P_LoginDTO();
 				
 		TokenKeyDTO token = new TokenKeyDTO();
 		token.setAgentID(agentID);
@@ -186,8 +186,8 @@ public class RestControllers {
 	@RequestMapping(value = "/signOut", method = RequestMethod.POST)
 	public Object signOut(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, ClassNotFoundException, SQLException {		
 		BufferedReader reader = request.getReader();
-		LoginDTO request_data = mapper.readValue(reader, LoginDTO.class);
-		LoginDTO response_data = new LoginDTO();
+		P_LoginDTO request_data = mapper.readValue(reader, P_LoginDTO.class);
+		P_LoginDTO response_data = new P_LoginDTO();
 		final String agentID = request_data.getAgentID();
 		final String jwt = request_data.getJwt();
 		
@@ -223,8 +223,8 @@ public class RestControllers {
 	@RequestMapping(value = "/update/accountName", method = RequestMethod.POST)
 	public Object update_accountName(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, ClassNotFoundException, SQLException {		
 		BufferedReader reader = request.getReader();
-		UpdateAccountDTO request_data = mapper.readValue(reader, UpdateAccountDTO.class);
-		UpdateAccountDTO response_data = new UpdateAccountDTO();
+		P_UpdateAccountDTO request_data = mapper.readValue(reader, P_UpdateAccountDTO.class);
+		P_UpdateAccountDTO response_data = new P_UpdateAccountDTO();
 		final String agentID = request_data.getAgentID();
 		final String jwt = request_data.getJwt();
 		final String accountName = request_data.getAccountName();
@@ -248,8 +248,8 @@ public class RestControllers {
 	@RequestMapping(value = "/update/deviceEnable", method = RequestMethod.POST)
 	public Object update_deviceEnable(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, ClassNotFoundException, SQLException {		
 		BufferedReader reader = request.getReader();
-		UpdateAccountDTO request_data = mapper.readValue(reader, UpdateAccountDTO.class);
-		UpdateAccountDTO response_data = new UpdateAccountDTO();
+		P_UpdateAccountDTO request_data = mapper.readValue(reader, P_UpdateAccountDTO.class);
+		P_UpdateAccountDTO response_data = new P_UpdateAccountDTO();
 		final String agentID = request_data.getAgentID();
 		final String deviceID = request_data.getDeviceID();
 		final String jwt = request_data.getJwt();
@@ -274,8 +274,8 @@ public class RestControllers {
 	@RequestMapping(value = "/update/otpEnable", method = RequestMethod.POST)
 	public Object update_OTPEnable(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, ClassNotFoundException, SQLException {		
 		BufferedReader reader = request.getReader();
-		UpdateAccountDTO request_data = mapper.readValue(reader, UpdateAccountDTO.class);
-		UpdateAccountDTO response_data = new UpdateAccountDTO();
+		P_UpdateAccountDTO request_data = mapper.readValue(reader, P_UpdateAccountDTO.class);
+		P_UpdateAccountDTO response_data = new P_UpdateAccountDTO();
 		final String agentID = request_data.getAgentID();
 		final int otpEnable = request_data.getOtpEnable();
 		final String jwt = request_data.getJwt();
@@ -399,7 +399,7 @@ public class RestControllers {
 	public Object loginNumber_verify(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, ClassNotFoundException, SQLException, InvalidKeyException, NoSuchAlgorithmException, TimeoutException, InterruptedException {		
 		BufferedReader reader = request.getReader();
 		AgentAccountDTO request_data = mapper.readValue(reader, AgentAccountDTO.class);
-		LoginDTO response_data = new LoginDTO();
+		P_LoginDTO response_data = new P_LoginDTO();
 		final String verify_code = request_data.getVerify_code();
 		final String agentID = redis.getCode(verify_code);		//get agentID from the Redis which key is login number that create from mobile application 
 		
@@ -451,7 +451,7 @@ public class RestControllers {
 	public Object verifyOTP(HttpServletRequest request) throws IOException, ServletException, ClassNotFoundException, SQLException, TimeoutException, InterruptedException {		
 		BufferedReader reader = request.getReader();
 		AgentAccountDTO request_data = mapper.readValue(reader, AgentAccountDTO.class);
-		LoginDTO response_data = new LoginDTO();
+		P_LoginDTO response_data = new P_LoginDTO();
 		final String agentID = request_data.getAgentID();
 		final String verify_code = request_data.getVerify_code();
 		

@@ -1,19 +1,11 @@
 package proj.checkIN.clientDTO;
 
-public class M_AccessLogItem {
+public class M_AccessLogItem extends AccountIdentityDTO{
 	private String ip;
     private String time;
     private String status;
-    private String jwt;
 
-    public String getJwt() {
-		return jwt;
-	}
-
-	public void setJwt(String jwt) {
-		this.jwt = jwt;
-	}
-
+    
 	public String getIp() {
         return ip;
     }
